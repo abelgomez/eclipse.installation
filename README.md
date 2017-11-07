@@ -6,4 +6,4 @@ This repository contains a set of scripts to install different versions of Eclip
 
 ### papyrus-marte
 
-Installation scripts to install Eclipse SDK, Papyrus, and the MARTE profile for Mac OS X.
+Installation scripts to install Eclipse SDK, Papyrus, and the MARTE profile for Mac OS X and Linux x86-64.
