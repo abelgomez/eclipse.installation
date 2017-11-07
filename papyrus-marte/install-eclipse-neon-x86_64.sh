@@ -23,8 +23,13 @@ function download {
 
 # Fail the execution and exit with error
 function fail {
-  # Notify about the error on stderr
-  >&2 echo "$1"
+  if [ -n $DISPLAY ] && hash xmessage 2> /dev/null ; then
+    # Notify about the error on an xwindow
+    xmessage -buttons Ok:0 -center -nearmouse "Fatal error: $1"
+  else
+    # Notify about the error on stderr
+    >&2 echo -e "$1"
+  fi
   # Abort
   >&2 echo "Aborting..."
   exit 1;
@@ -39,7 +44,7 @@ fi
 url=http://archive.eclipse.org/eclipse/downloads/drops4/R-4.6.3-201703010400/eclipse-SDK-4.6.3-linux-gtk-x86_64.tar.gz
 
 # Eclipse version
-version="mars"
+version="neon"
 
 # Temp locations
 tmpfile=$(mktemp)
@@ -58,7 +63,7 @@ echo "Checking previous installations..."
 if [ -d "${0%/*}/eclipse-$version" ]; then
   fail "An existing installation of Eclipse lives in ${0%/*}. Please, delete it or run this script in another location.\n\nInstallation aborted."
 fi
-echo mv -n "$tmpdir/eclipse" "${0%/*}/eclipse-$version"
+
 # Get the package of Eclipse SDK
 echo "Getting installation package..."
 download $url $tmpfile

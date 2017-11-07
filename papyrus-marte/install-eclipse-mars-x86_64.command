@@ -20,6 +20,11 @@ function fail {
   exit 1;
 }
 
+# Check os type
+if [[ $OSTYPE != "darwin"* ]]; then
+  fail "Your OS ($OSTYPE) is not supported by this script!"
+fi
+
 # Link to Eclipse distribution
 url=http://archive.eclipse.org/eclipse/downloads/drops4/R-4.5.2-201602121500/eclipse-SDK-4.5.2-macosx-cocoa-x86_64.tar.gz
 
@@ -81,6 +86,9 @@ else
   echo "Configurations finished"
 fi
 
+# Exit from the temp location
+popd
+
 # Move Eclipse to its final location
 echo "Installing..."
 mv -n "$tmpdir/Eclipse.app" "${0%/*}/Eclipse-$Version.app"
@@ -91,9 +99,6 @@ if [ $? -eq 0 ]; then
 else
   fail "Unable to install Eclipse into $(pwd)"
 fi
-
-# Exit from the temp location
-popd
 
 # Done!
 echo "Done"

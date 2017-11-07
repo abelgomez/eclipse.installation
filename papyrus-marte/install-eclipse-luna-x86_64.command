@@ -20,6 +20,11 @@ function fail {
   exit 1;
 }
 
+# Check os type
+if [[ $OSTYPE != "darwin"* ]]; then
+  fail "Your OS ($OSTYPE) is not supported by this script!"
+fi
+
 # Link to Eclipse distribution
 url=http://archive.eclipse.org/eclipse/downloads/drops4/R-4.4.2-201502041700/eclipse-SDK-4.4.2-macosx-cocoa-x86_64.tar.gz
 
@@ -41,7 +46,7 @@ echo "************************************************************"
 # another Eclipse installation in the target folder that will prevent this
 # installation
 echo "Checking previous installations..."
-if [ -d "${0%/*}/Eclipse-$Version.app" ]; then
+if [ -d "${0%/*}/Eclipse-$Version" ]; then
   fail "An existing installation of Eclipse lives in ${0%/*}. Please, delete it or run this script in another location.\n\nInstallation aborted."
 fi
 
@@ -81,19 +86,19 @@ else
   echo "Configurations finished"
 fi
 
+# Exit from the temp location
+popd
+
 # Move Eclipse to its final location
 echo "Installing..."
-mv -n "$tmpdir/eclipse/Eclipse.app" "${0%/*}/Eclipse-$Version.app"
+mv -n "$tmpdir/eclipse" "${0%/*}/Eclipse-$Version"
 
 # If Eclipse was successfully moved to its final location, launch it
 if [ $? -eq 0 ]; then
-  nohup "${0%/*}/Eclipse-$Version.app/Contents/MacOS/eclipse" &>/dev/null &disown
+  nohup "${0%/*}/Eclipse-$Version/Eclipse.app/Contents/MacOS/eclipse" &>/dev/null &disown
 else
   fail "Unable to install Eclipse into $(pwd)"
 fi
-
-# Exit from the temp location
-popd
 
 # Done!
 echo "Done"
