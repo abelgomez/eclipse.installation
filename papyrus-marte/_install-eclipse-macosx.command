@@ -114,7 +114,7 @@ if [ $legacy = true ]; then
 fi
 
 if [ -d "$destdir" ]; then
-  fail "An existing installation of Eclipse lives in ${0%/*}. Please, delete it or run this script in another location.\n\nInstallation aborted."
+  fail "An existing installation of Eclipse lives in '${0%/*}'. Please, delete it or run this script in another location.\n\nInstallation aborted."
 fi
 
 # Get the package of Eclipse SDK
