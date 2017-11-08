@@ -139,15 +139,17 @@ if [ $? -ne 0 ]; then
 fi
 
 origdir="$tmpdir/Eclipse.app"
-origextra=""
+sourceappname="Eclipse.app"
+legacyfix=""
 if [ $legacy = true ]; then
-	origdir="$tmpdir/eclipse"
-	origextra="/Eclipse.app"
+  origdir="$tmpdir/eclipse"
+  sourceappname="eclipse/Eclipse.app"
+  legacyfix="/Eclipse.app"
 fi
 
 # Start configuring Eclipse with Papyrus and MARTE
 echo "Configuring (this may take a while, please be patient)..."
-"$origdir$origextra/Contents/MacOS/eclipse" \
+"$tmpdir/$sourceappname/Contents/MacOS/eclipse" \
    -nosplash \
    -application org.eclipse.equinox.p2.director \
    -repository http://download.eclipse.org/releases/$version/,http://download.eclipse.org/modeling/mdt/papyrus/updates/releases/$version/\
@@ -169,14 +171,10 @@ mv -n "$origdir" "$destdir"
 
 # If Eclipse was successfully moved to its final location, launch it
 if [ $? -eq 0 ]; then
-  # Go to the Eclipse binary directory
-  pushd "$destdir"
   # Execute Eclipse
-  nohup "$destdir/Contents/MacOS/eclipse" &>/dev/null &disown
-  # Go back
-  popd
+  nohup "$destdir$legacyfix/Contents/MacOS/eclipse" &>/dev/null &disown
 else
-  fail "Unable to install Eclipse into $(pwd)"
+  fail "Unable to install Eclipse into $destdir"
 fi
 
 # Done!
