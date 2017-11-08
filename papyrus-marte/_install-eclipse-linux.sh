@@ -38,7 +38,6 @@ function fail {
 # Prints the script help
 function usage {
     echo "Install Eclipse version from URL"
-	echo ""
     echo "Usage:"
     echo " $0 --url <url> --version <version>"
 }

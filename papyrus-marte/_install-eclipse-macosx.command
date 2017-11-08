@@ -25,7 +25,6 @@ function fail {
 # prior to Eclipse Luna (including)
 function usage {
     echo "Install Eclipse version from URL"
-	echo ""
     echo "Usage:"
     echo " $0 --url <url> --version <version> [--legacy]"
 }
