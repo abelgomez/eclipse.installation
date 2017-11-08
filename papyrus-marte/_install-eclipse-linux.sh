@@ -39,7 +39,10 @@ function fail {
 function usage {
     echo "Install Eclipse version from URL"
     echo "Usage:"
-    echo " $0 --url <url> --version <version>"
+    echo " $0 -u <url> -v <version>"
+    echo "Options:"
+    echo " -u <url>      The URL"
+    echo " -v <version>  Version name (Neon, Mars, Luna...)"
 }
 
 # Check OS type (mainly to avoid running this script in non-Linux environments)
@@ -48,7 +51,7 @@ if [[ $OSTYPE != "linux-gnu" ]]; then
 fi
 
 # Execute getopt
-args=$(getopt -l "url:,version:" -n "$1" -- --long-key "$@");
+args=$(getopt -o "u:v:" -n "$1" -- "$@");
 
 # Bad arguments
 if [ $? -ne 0 ]; then
@@ -61,11 +64,11 @@ eval set -- "$args";
 
 while true; do
   case "$1" in
-    --url)
+    -u)
       url=$2
       shift 2
       ;;
-    --version)
+    -v)
       version=$2
       shift 2
       ;;

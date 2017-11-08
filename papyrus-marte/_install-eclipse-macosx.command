@@ -26,7 +26,11 @@ function fail {
 function usage {
     echo "Install Eclipse version from URL"
     echo "Usage:"
-    echo " $0 --url <url> --version <version> [--legacy]"
+    echo " $0 -u <url> -v <version> [-l]"
+    echo "Options:"
+    echo " -u <url>      The URL"
+    echo " -v <version>  Version name (Neon, Mars, Luna...)"
+    echo " -l            Legacy packaging (should be used with Luna and previous versions)"
 }
 
 # Check os type
@@ -35,7 +39,7 @@ if [[ $OSTYPE != "darwin"* ]]; then
 fi
 
 # Execute getopt
-args=$(getopt -l "url:,version:,legacy" -n "$1" -- --long-key "$@");
+args=$(getopt "u:v:l" "$@");
 
 # Bad arguments
 if [ $? -ne 0 ]; then
@@ -50,15 +54,15 @@ legacy=false
 
 while true; do
   case "$1" in
-    --url)
+    -u)
       url=$2
       shift 2
       ;;
-    --version)
+    -v)
       version=$2
       shift 2
       ;;
-    --legacy)
+    -l)
       legacy=true
       shift
       ;;
