@@ -77,6 +77,7 @@ while true; do
     esac
 done
 
+# Ensure the input argument are defined
 if [ -z $url ] || [ -z $version ]; then
   usage
   if [ -z $url ]; then
@@ -86,9 +87,7 @@ if [ -z $url ] || [ -z $version ]; then
     echo "Error: version argument undefined"
   fi
   exit 1
-fi  
-
-
+fi
 
 # Temp locations
 tmpfile=$(mktemp)
