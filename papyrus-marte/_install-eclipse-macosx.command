@@ -13,8 +13,12 @@ function popd {
 
 # Fail the execution and exit with error
 function fail {
-  # Use a GUI dialog to notify about the error
-  osascript -e "tell application (path to frontmost application as text) to display dialog \"$1\" buttons {\"OK\"} with icon stop" > /dev/null
+  if hash osascript 2>/dev/null; then
+    # Use a GUI dialog to notify about the error
+    osascript -e "tell application (path to frontmost application as text) to display dialog \"$1\" buttons {\"OK\"} with icon stop" > /dev/null
+  else
+    >&2 echo -e "$1"
+  fi
   # Abort
   echo "Aborting..."
   exit 1;
