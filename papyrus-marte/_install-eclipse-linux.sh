@@ -77,19 +77,18 @@ while true; do
     esac
 done
 
-
-if [ -z $url ]; then
-  echo "Error: url argument undefined"
-fi  
-
-if [ -z $version ]; then
-  echo "Error: version argument undefined"
-fi  
-
 if [ -z $url ] || [ -z $version ]; then
   usage
+  if [ -z $url ]; then
+    echo "Error: url argument undefined"
+  fi  
+  if [ -z $version ]; then
+    echo "Error: version argument undefined"
+  fi
   exit 1
 fi  
+
+
 
 # Temp locations
 tmpfile=$(mktemp)
