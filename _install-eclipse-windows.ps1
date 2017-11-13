@@ -63,6 +63,12 @@ $tmpfile = New-TemporaryFile
 $tmpdir = New-TemporaryFile | %{ rm $_; mkdir $_ }
 
 Try {
+
+  # Save parameters into script variables
+  $url = $u
+  $version = $v
+  $features = $f
+
   # Start!
   Write-Output "************************************************************"
 
