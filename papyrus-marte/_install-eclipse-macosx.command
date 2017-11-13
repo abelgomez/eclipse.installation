@@ -34,6 +34,7 @@ function usage {
     echo "Options:"
     echo " -u <url>      The URL"
     echo " -v <version>  Version name (Neon, Mars, Luna...)"
+	echo " -f <feature>  Features to be installed"
     echo " -l            Legacy packaging (should be used with Luna and previous versions)"
 }
 
@@ -43,7 +44,7 @@ if [[ $OSTYPE != "darwin"* ]]; then
 fi
 
 # Execute getopt
-args=$(getopt "u:v:l" "$@");
+args=$(getopt "u:v:f:l" "$@");
 
 # Bad arguments
 if [ $? -ne 0 ]; then
@@ -66,6 +67,10 @@ while true; do
       version=$2
       shift 2
       ;;
+    -f)
+      features=$2
+      shift 2
+      ;;
     -l)
       legacy=true
       shift
@@ -78,13 +83,16 @@ while true; do
 done
 
 # Ensure the input argument are defined
-if [ -z $url ] || [ -z $version ]; then
+if [ -z $url ] || [ -z $version ] || [ -f $features ]; then
   usage
   if [ -z $url ]; then
-    echo "Error: url argument undefined"
+    echo "Error: url (-u) argument undefined"
   fi  
   if [ -z $version ]; then
-    echo "Error: version argument undefined"
+    echo "Error: version (-v) argument undefined"
+  fi
+  if [ -z $features ]; then
+    echo "Error: features (-f) argument undefined"
   fi
   exit 1
 fi  
@@ -153,7 +161,7 @@ echo "Configuring (this may take a while, please be patient)..."
    -nosplash \
    -application org.eclipse.equinox.p2.director \
    -repository http://download.eclipse.org/releases/$version/,http://download.eclipse.org/modeling/mdt/papyrus/updates/releases/$version/\
-   -installIU org.eclipse.papyrus.sdk.feature.feature.group,org.eclipse.papyrus.extra.marte.feature.feature.group,org.eclipse.papyrus.extra.marte.properties.feature.feature.group,org.eclipse.papyrus.extra.marte.textedit.feature.feature.group
+   -installIU $features
 
 # If the configuration was unsuccessful, fail
 if [ $? -ne 0 ]; then

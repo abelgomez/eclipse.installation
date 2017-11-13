@@ -1,7 +1,8 @@
 ﻿# Program parameters
 param (
-    [Parameter(Mandatory=$true)]$url,
-    [Parameter(Mandatory=$true)]$version
+    [Parameter(Mandatory=$true)]$u,
+    [Parameter(Mandatory=$true)]$v,
+    [Parameter(Mandatory=$true)]$f
  )
 
 # Fail the execution and exit with error
@@ -104,7 +105,7 @@ Try {
       -nosplash `
       -application org.eclipse.equinox.p2.director `
       -repository http://download.eclipse.org/releases/$version/,http://download.eclipse.org/modeling/mdt/papyrus/updates/releases/$version/ `
-      -installIU org.eclipse.papyrus.sdk.feature.feature.group,org.eclipse.papyrus.extra.marte.feature.feature.group,org.eclipse.papyrus.extra.marte.properties.feature.feature.group,org.eclipse.papyrus.extra.marte.textedit.feature.feature.group
+      -installIU $features
   } Finally {
     # Exit from the temp location
     Pop-Location
