@@ -30,11 +30,11 @@ function fail {
 function usage {
     echo "Install Eclipse version from URL"
     echo "Usage:"
-    echo " $0 -u <url> -v <version> [-l]"
+    echo " $0 -u <url> -v <version> -f <features> [-l]"
     echo "Options:"
     echo " -u <url>      The URL"
     echo " -v <version>  Version name (Neon, Mars, Luna...)"
-	echo " -f <feature>  Features to be installed"
+	echo " -f <features> Features to be installed"
     echo " -l            Legacy packaging (should be used with Luna and previous versions)"
 }
 

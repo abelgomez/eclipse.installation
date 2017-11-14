@@ -39,11 +39,11 @@ function fail {
 function usage {
     echo "Install Eclipse version from URL"
     echo "Usage:"
-    echo " $0 -u <url> -v <version>"
+    echo " $0 -u <url> -v <version> -f <features>"
     echo "Options:"
     echo " -u <url>      The URL"
     echo " -v <version>  Version name (Neon, Mars, Luna...)"
-	echo " -f <feature>  Features to be installed"
+	echo " -f <features> Features to be installed"
 }
 
 # Check OS type (mainly to avoid running this script in non-Linux environments)
